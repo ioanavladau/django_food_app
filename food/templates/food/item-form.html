@@ -1,0 +1,11 @@
+{% extends 'food/base.html' %}
+{% block body %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {% comment %} this {{ form }} is a context which will be passed from a view {% endcomment %}
+        {{ form }} 
+        <button type="submit">Save</button>
+    </form>
+
+{% endblock %}
