@@ -1,10 +1,53 @@
-{% for item in item_list %}
+{% extends 'food/base.html' %}
 
-    <ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
 
-        <li>
-            {{ item.id }} -- {{ item.item_name }}
-        </li>
-    </ul>
 
-{% endfor %}
+    {% block body %}
+        {% for item in item_list %}
+            <div class="row">
+                <div class="col-md-3 offset-md-2">
+                    <img class="card" height="150px" src="{{ item.item_image }}"/>
+                </div>
+                <div class="col-md-4">
+                    <h3>{{ item.item_name }}</h3>
+                    <h5>{{ item.item_desc }}</h5>
+                    <h6>${{ item.item_price }}</h6>
+                </div>
+                <div class="col-md-2">
+                    <a href="{% url 'food:detail' item.id %}" class="btn btn-success">Details</a>
+                </div>
+            </div>
+
+
+        {% endfor %}
+    {% endblock %}
+
+
+
+
+        {% comment %} THIS IS THE OLD CODE {% endcomment %}
+        {% comment %} {% for item in item_list %}
+
+        <ul>
+
+            <li>
+                {% comment %} <a href="/food/{{ item.id }}"> {{ item.id }} -- {{ item.item_name }} </a> {% endcomment %}
+                {% comment %} SAME AS {% endcomment %}
+                {% comment %} <a href="{% url 'food:detail' item.id %}"> {{ item.id }} -- {{ item.item_name }} </a> {% endcomment %}
+            {% comment %} </li> {% endcomment %}
+        {% comment %} </ul> {% endcomment %}
+
+        {% comment %} {% endfor %} {% endcomment %}
+    {% comment %} {% endblock %} {% endcomment %} 
+
+</body>
+</html>
