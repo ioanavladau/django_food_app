@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'food.apps.FoodConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -119,3 +120,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = 'food:index'
+
+# I named it login because in the url_patterns from mysite the login path has name='login'
+LOGIN_URL = 'login'
+
+# to change the directory where I save the profile pictures/media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures') # django will create a pictures directory and inside that, there will be profile_pictures
+MEDIA_URL = '/pictures/'
+

@@ -15,8 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from users import views as user_views
+from django.contrib.auth import views as authentication_views # class-based views - they need .as_view()
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('food/', include('food.urls')),
+    path('register/', user_views.register, name='register'),
+    path('login/', authentication_views.LoginView.as_view(template_name='users/login.html'), name='login'), # defined the path where django has to look for the login template
+    path('logout/', authentication_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('profile/', user_views.profilepage, name='profile'),
 ]
+
+# add this pattern to serve static files
+urlpatterns += [
+    # ... the rest of your URLconf goes here ...
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,6 @@
+<form method="POST">
+    {% csrf_token %}
+    {% comment %} default django form {% endcomment %}
+    {{ form }} 
+    <button type="submit">Signup</button>
+</form>
