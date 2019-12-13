@@ -3,6 +3,11 @@ from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.forms import UserCreationForm - I no longer need it
 from django.contrib import messages
 from .forms import RegisterForm
+
+# task queue with celery
+from celery import task
+from .tasks import profile_created
+
 # Create your views here.
 
 def register(request):
@@ -12,6 +17,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Welcome {username}, your account is created') # this one throws a syntax error because of Python version
+            profile_created.delay()
             # messages.success(request, str.format('Welcome {{username}}, your account is created'))
             return redirect('login')
     else:
@@ -21,3 +27,4 @@ def register(request):
 @login_required
 def profilepage(request):
     return render(request, 'users/profile.html')
+

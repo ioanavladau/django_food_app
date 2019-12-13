@@ -130,5 +130,7 @@ LOGIN_URL = 'login'
 
 # to change the directory where I save the profile pictures/media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures') # django will create a pictures directory and inside that, there will be profile_pictures
+
 MEDIA_URL = '/pictures/'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
