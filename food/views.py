@@ -6,6 +6,10 @@ from .forms import ItemForm #.forms is forms.py file
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
+
+# pagination
+from django.core.paginator import Paginator
+
 # Create your views here.
 
 
@@ -13,9 +17,16 @@ from django.views.generic.edit import CreateView
 def index(request):
     item_list = Item.objects.all()
     # template = loader.get_template('food/index.html')
+
+    # pagination
+    # paginator = Paginator(item_list, 4)
+    # page = request.GET.get('page')
+    # item_list = paginator.get_page(page)
+
     context = {
         'item_list': item_list,
     }
+
     # return HttpResponse(template.render(context, request))
     return render(request, 'food/index.html', context)
 
@@ -24,6 +35,16 @@ class IndexClassView(ListView):
     model = Item
     template_name = 'food/index.html'
     context_object_name = 'item_list'
+    paginate_by = 5
+
+    # search functionality 
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            object_list = self.model.objects.filter(item_name__icontains=query)
+        else:
+            object_list = self.model.objects.all()
+        return object_list
 
 
 def item(request):
